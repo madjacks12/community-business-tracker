@@ -59,7 +59,7 @@ public class Sql2oBusinessDaoTest {
         businessDao.add(testBusinessOne);
         businessDao.add(testBusinessTwo);
         businessDao.add(testBusinessThree);
-        assertEquals(4, businessDao.findById(3).getId());
+        assertEquals(3, businessDao.findById(3).getId());
     }
 
 
