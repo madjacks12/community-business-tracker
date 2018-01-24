@@ -2,6 +2,7 @@ package dao;
 
 import models.Business;
 import models.Charity;
+import org.sql2o.Sql2o;
 
 import java.util.List;
 
@@ -9,6 +10,12 @@ import java.util.List;
  * Created by Guest on 1/24/18.
  */
 public class Sql2oCharityDao implements CharityDao {
+
+    private final Sql2o sql2o;
+
+    public Sql2oCharityDao(Sql2o sql2o) {
+        this.sql2o = sql2o;
+    }
 
     @Override
     public void add(Charity charity) {
@@ -31,7 +38,13 @@ public class Sql2oCharityDao implements CharityDao {
     }
 
     @Override
+    public void update(int id, String charityName) {
+
+    }
+
+    @Override
     public void deleteById(int id) {
 
     }
+
 }

@@ -21,5 +21,4 @@ public interface CharityDao {
 
 
     void deleteById(int id);
-    void deleteAllCharities();
 }

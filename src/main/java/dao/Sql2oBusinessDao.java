@@ -23,7 +23,7 @@ public class Sql2oBusinessDao implements BusinessDao {
 
     @Override
     public void add(Business business) {
-        String sql = "INsERT INTO businesses (businessName, address, zipcode, phone, email) VALUES (:businessName, :address, :zipcode, :phone, :email";
+        String sql = "INsERT INTO businesses (businessName, address, phone, email) VALUES (:businessName, :address, :phone, :email";
         try(Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql)
                     .bind(business)

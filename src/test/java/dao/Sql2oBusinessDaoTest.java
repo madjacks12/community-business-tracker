@@ -26,8 +26,6 @@ public class Sql2oBusinessDaoTest {
         String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         businessDao = new Sql2oBusinessDao(sql2o);
-        businessTypeDao = new Sql2oBusinessTypeDao(sql2o);
-        charityDao = new Sql2oCharityDao(sql2o);
         conn = sql2o.open();
     }
 
@@ -93,12 +91,12 @@ public class Sql2oBusinessDaoTest {
 
         BusinessType testBusinessType = setupBusinessType();
 
-        businessTypeDao.add(testCharity);
+        businessTypeDao.add(testBusinessType);
 
-        charityDao.addCharityToBusiness(testCharity, testBusinessOne);
-        charityDao.addCharityToBusiness(testCharity, testBusinessTwo);
+        businessTypeDao.addBusinessTypeToBusiness(testBusinessType, testBusinessOne);
+        businessTypeDao.addBusinessTypeToBusiness(testBusinessType, testBusinessTwo);
 
-        assertEquals(2, charityDao.getAllBusinessesForACharity(testCharity.getId()).size());
+        assertEquals(2, businessTypeDao.getAllBusinessesForBusinessType(testBusinessType.getId()).size());
     }
 
     @Test
@@ -118,9 +116,6 @@ public class Sql2oBusinessDaoTest {
 
         assertEquals(2, charityDao.getAllBusinessesForACharity(testCharity.getId()).size());
     }
-
-
-
 
 
     @Test

@@ -12,6 +12,7 @@ public interface BusinessTypeDao {
 
     //create
     void add(BusinessType businessType);
+    public void addBusinessTypeToBusiness(BusinessType businessType, Business business);
 
     //read
     List<BusinessType> getAll();
