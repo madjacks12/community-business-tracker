@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS businesses (
  id int PRIMARY KEY auto_increment,
  businessName VARCHAR,
  address VARCHAR,
- zipcode VARCHAR,
  phone VARCHAR,
  email VARCHAR
 );
