@@ -4,15 +4,16 @@ package models;
  * Created by Guest on 1/24/18.
  */
 public class BusinessType {
-    private String name;
+    private String businessTypeName;
     private int id;
 
-    public BusinessType(String name) {
-        this.name = name;
+    public BusinessType(String businessTypeName) {
+
+        this.businessTypeName = businessTypeName;
     }
 
-    public String getName() {
-        return name;
+    public String getBusinessTypeName() {
+        return businessTypeName;
     }
 
     public int getId() {
@@ -31,12 +32,12 @@ public class BusinessType {
         BusinessType that = (BusinessType) o;
 
         if (id != that.id) return false;
-        return name.equals(that.name);
+        return businessTypeName.equals(that.businessTypeName);
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
+        int result = businessTypeName.hashCode();
         result = 31 * result + id;
         return result;
     }

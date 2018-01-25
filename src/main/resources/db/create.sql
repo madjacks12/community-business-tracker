@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS charities (
 
 CREATE TABLE IF NOT EXISTS businessType (
  id int PRIMARY KEY auto_increment,
- businessType VARCHAR
+ businessTypeName VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS businesses_charities (
