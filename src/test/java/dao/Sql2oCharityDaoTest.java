@@ -42,7 +42,7 @@ public class Sql2oCharityDaoTest {
     public void add() throws Exception {
         Charity testCharity = setupCharity();
         charityDao.add(testCharity);
-        assertEquals(2, testCharity.getId());
+        assertEquals(1, testCharity.getId());
     }
 
     @Test
