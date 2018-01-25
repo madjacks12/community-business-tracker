@@ -57,7 +57,7 @@ public class Sql2oCharityDaoTest {
         businessDao.addBusinessToCharity(testBusiness, testCharity);
         businessDao.addBusinessToCharity(testBusinessOther, testCharity);
 
-        assertEquals(3, charityDao.getAllBusinessesForACharity(testCharity.getId()).size());
+        assertEquals(2, charityDao.getAllBusinessesForACharity(testCharity.getId()).size());
     }
 
     @Test
