@@ -17,7 +17,7 @@ public interface CharityDao {
     List<Business> getAllBusinessesForACharity(int id);
 
 
-    void update(int id, String charityName);
+//    void update(int id, String charityName);
 
 
     void deleteById(int id);

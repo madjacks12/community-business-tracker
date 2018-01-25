@@ -85,45 +85,14 @@ public class Sql2oBusinessDaoTest {
     }
 
     @Test
-    public void addBusinessTypeToBusiness() throws Exception {
-        Business testBusinessOne = setupBusiness();
-        Business testBusinessTwo = setupBusinessAlt();
-
-        businessDao.add(testBusinessOne);
-        businessDao.add(testBusinessTwo);
-
-        BusinessType testBusinessType = setupBusinessType();
-
-        businessTypeDao.add(testBusinessType);
-
-        businessTypeDao.addBusinessTypeToBusiness(testBusinessType, testBusinessOne);
-        businessTypeDao.addBusinessTypeToBusiness(testBusinessType, testBusinessTwo);
-
-        assertEquals(2, businessTypeDao.getAllBusinessesForBusinessType(testBusinessType.getId()).size());
-    }
-
-//    @Test
-//    public void getAllCharitiesForABusiness() throws Exception {
-//        Business testBusinessOne = setupBusiness();
-//        Business testBusinessTwo = setupBusinessAlt();
-//
-//        businessDao.add(testBusinessOne);
-//        businessDao.add(testBusinessTwo);
-//
-//        Charity testCharity = setupCharity();
-//
-//        charityDao.add(testCharity);
-//
-//        charityDao.addCharityToBusiness(testCharity, testBusinessOne);
-//        charityDao.addCharityToBusiness(testCharity, testBusinessTwo);
-//
-//        assertEquals(2, charityDao.getAllBusinessesForACharity(testCharity.getId()).size());
-//    }
-
-
-    @Test
     public void deleteById() throws Exception {
+        Business testBusiness = setupBusiness();
+        businessDao.add(testBusiness);
+        businessDao.deleteById(testBusiness.getId());
+        assertEquals(0, businessDao.getAll().size());
     }
+
+
 
     public Business setupBusiness() {
         return new Business("BusinessName", "address", "email", "phone");

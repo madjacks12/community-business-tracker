@@ -124,15 +124,10 @@ public class Sql2oBusinessDao implements BusinessDao {
                     .addParameter("id", id)
                     .executeUpdate();
             con.createQuery(deleteJoin)
-                    .addParameter("restaurantId", id)
+                    .addParameter("businessId", id)
                     .executeUpdate();
         } catch (Sql2oException ex) {
             System.out.println(ex);
         }
     }
 }
-
-
-
-//String sql = ""
-//try(Connection con = sql2o.open())

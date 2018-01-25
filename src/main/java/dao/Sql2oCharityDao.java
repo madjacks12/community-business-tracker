@@ -6,6 +6,8 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,25 +38,54 @@ public class Sql2oCharityDao implements CharityDao {
     @Override
     public void addCharityToBusiness(Charity charity, Business business) {
 
+
     }
 
     @Override
     public List<Charity> getAll() {
-        return null;
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM charities")
+                    .executeAndFetch(Charity.class);
+        }
     }
 
     @Override
-    public List<Business> getAllBusinessesForACharity(int id) {
-        return null;
+    public List<Business> getAllBusinessesForACharity(int charityId) {
+        ArrayList<Business> businesses = new ArrayList<>();
+
+        String joinQuery = "SELECT businessid FROM businesses_charities WHERE charityid = :charityId";
+        try (Connection con = sql2o.open()) {
+            List<Integer> allBusinessIds = con.createQuery(joinQuery)
+                    .addParameter("charityId", charityId)
+                    .executeAndFetch(Integer.class); //what is happening in the lines above?
+            for (Integer businessId : allBusinessIds){
+                String businessQuery = "SELECT * FROM businesses WHERE id = :businessId";
+                businesses.add(
+                        con.createQuery(businessQuery)
+                                .addParameter("businessId", businessId)
+                                .executeAndFetchFirst(Business.class));
+            }
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+        return businesses;
     }
 
-    @Override
-    public void update(int id, String charityName) {
-
-    }
+//    @Override
+//    public void update(int id, String charityName) {
+//
+//    }
 
     @Override
     public void deleteById(int id) {
+        String sql = "DELETE from charities WHERE id = :id";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeUpdate();
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
 
     }
 

@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS charities (
  charityName VARCHAR
 );
 
-CREATE TABLE IF NOT EXISTS businessType (
+CREATE TABLE IF NOT EXISTS businessTypes (
  id int PRIMARY KEY auto_increment,
  businessTypeName VARCHAR
 );

@@ -19,7 +19,6 @@ public interface BusinessTypeDao {
     List<Business> getAllBusinessesForBusinessType(int id);
 
     //update
-    void update(int id, String businessTypeName);
 
     //delete
     void deleteById(int id);
