@@ -37,7 +37,15 @@ public class Sql2oCharityDao implements CharityDao {
 
     @Override
     public void addCharityToBusiness(Charity charity, Business business) {
-
+        String sql = "INSERT INTO businesses_charities (businessid, charityid) VALUES (:businessId, :charityId)";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("businessId", business.getId())
+                    .addParameter("charityId", charity.getId())
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
 
     }
 
