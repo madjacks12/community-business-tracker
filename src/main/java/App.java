@@ -157,8 +157,12 @@ public class App {
         post("/business/:businessId/update", "application/json", (request, response) -> {
             int businessId = Integer.parseInt(request.params("businessId"));
             Business businessToFind = businessDao.findById(businessId);
-            businessDao.update(businessId, "name", "address", "email", "phone");
-            return gson.toJson(businessToFind);
+            Business business = gson.fromJson(request.body(), Business.class);
+            System.out.println(business);
+
+            businessDao.update(businessId, business.getBusinessName(), business.getAddress(), business.getEmail(), business.getPhone());
+            response.status(201);
+            return gson.toJson(business);
         });
 
         exception(ApiException.class, (exception, request, response) -> {
