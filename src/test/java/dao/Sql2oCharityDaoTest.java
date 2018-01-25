@@ -62,7 +62,11 @@ public class Sql2oCharityDaoTest {
 
     @Test
     public void getAll() throws Exception {
-
+        Charity testCharityOne = setupCharity();
+        Charity testCharityTwo = setupCharity();
+        charityDao.add(testCharityOne);
+        charityDao.add(testCharityTwo);
+        assertEquals(3, charityDao.getAll().size());
     }
 
     @Test
