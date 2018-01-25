@@ -19,6 +19,5 @@ public interface CharityDao {
 
 //    void update(int id, String charityName);
 
-
     void deleteById(int id);
 }

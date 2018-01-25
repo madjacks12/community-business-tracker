@@ -86,7 +86,10 @@ public class Sql2oCharityDaoTest {
 
     @Test
     public void deleteById() throws Exception {
-
+        Charity testCharity = setupCharity();
+        charityDao.add(testCharity);
+        charityDao.deleteById(charityDao.getAll().size());
+        assertEquals(0, charityDao.getAll().size());
     }
 
     public Business setupBusiness() {
