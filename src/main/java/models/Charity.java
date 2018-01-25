@@ -7,11 +7,11 @@ public class Charity {
     private String charityName;
     private int id;
 
-    public Charity(String name) {
-        this.charityName = name;
+    public Charity(String charityName) {
+        this.charityName = charityName;
     }
 
-    public String getName() {
+    public String getCharityName() {
         return charityName;
     }
 

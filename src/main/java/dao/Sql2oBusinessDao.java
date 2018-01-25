@@ -58,7 +58,7 @@ public class Sql2oBusinessDao implements BusinessDao {
 
     @Override
     public void addBusinessToBusinessType(Business business, BusinessType businessType) {
-        String sql = "INSERT INTO businesses_businessTypes (businessId, businessTypeId) VALUES (:businessId, :businessTypeId)";
+        String sql = "INSERT INTO businesses_businessTypes (businessid, businessTypeid) VALUES (:businessId, :businessTypeId)";
         try(Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("businessId", business.getId())
@@ -73,7 +73,7 @@ public class Sql2oBusinessDao implements BusinessDao {
     public List<Charity> getAllCharitiesForABusiness(int businessId) {
         ArrayList<Charity> charities = new ArrayList<>();
 
-        String joinQuery = "SELECT charityid FROM businesses_charities WHERE businessid = :businessid";
+        String joinQuery = "SELECT charityid FROM businesses_charities WHERE businessid = :businessId";
 
         try (Connection con = sql2o.open()) {
             List<Integer> allCharitiesIds = con.createQuery(joinQuery)
@@ -82,7 +82,7 @@ public class Sql2oBusinessDao implements BusinessDao {
             for (Integer charityId : allCharitiesIds){
                 String charityQuery = "SELECT * FROM charities WHERE id = :charityId";
                 charities.add(
-                        con.createQuery(charityQuery)
+                    con.createQuery(charityQuery)
                         .addParameter("charityId", charityId)
                         .executeAndFetchFirst(Charity.class));
             }

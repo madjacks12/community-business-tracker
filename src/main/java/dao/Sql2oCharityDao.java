@@ -2,7 +2,9 @@ package dao;
 
 import models.Business;
 import models.Charity;
+import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import org.sql2o.Sql2oException;
 
 import java.util.List;
 
@@ -19,7 +21,16 @@ public class Sql2oCharityDao implements CharityDao {
 
     @Override
     public void add(Charity charity) {
-
+        String sql = "INSERT INTO charities (charityName) VALUES (:charityName)";
+        try(Connection con = sql2o.open()) {
+            int id = (int) con.createQuery(sql)
+                    .bind(charity)
+                    .executeUpdate()
+                    .getKey();
+            charity.setId(id);
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
     }
 
     @Override

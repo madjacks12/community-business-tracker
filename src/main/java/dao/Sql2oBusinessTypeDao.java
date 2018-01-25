@@ -21,17 +21,19 @@ public class Sql2oBusinessTypeDao implements BusinessTypeDao {
 
     @Override
     public void add(BusinessType businessType) {
+
     }
 
     @Override
     public void addBusinessTypeToBusiness(BusinessType businessType, Business business){
-        String sql = "INSERT INTO businesses_businessTypes (businessid, businesstypeid) VALUES (:businessId, :businessTypeId)";
-        try (Connection con = sql2o.open()) {
-            con.createQuery(sql)
-                    .addParameter("businessId", business.getId())
-                    .addParameter("businessTypeId", businessType.getId())
-                    .executeUpdate();
-        } catch (Sql2oException ex){
+        String sql = "INSERT INTO basinessType (name) VALUES (:name)";
+        try(Connection con = sql2o.open()){
+            int id = (int) con.createQuery(sql)
+                    .bind(businessType)
+                    .executeUpdate()
+                    .getKey();
+            businessType.setId(id);
+        } catch (Sql2oException ex) {
             System.out.println(ex);
         }
     }

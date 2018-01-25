@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 /**
@@ -26,6 +28,7 @@ public class Sql2oBusinessDaoTest {
         String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         businessDao = new Sql2oBusinessDao(sql2o);
+        charityDao = new Sql2oCharityDao(sql2o);
         conn = sql2o.open();
     }
 
@@ -64,21 +67,20 @@ public class Sql2oBusinessDaoTest {
 
 
     @Test
-    public void addBusinessToCharity() throws Exception {
-        Business testBusinessOne = setupBusiness();
-        Business testBusinessTwo = setupBusinessAlt();
+    public void  getAllCharitiesForABusiness() throws Exception {
+        Charity newCharity = new Charity("Veteran Coders");
+        charityDao.add(newCharity);
 
-        businessDao.add(testBusinessOne);
-        businessDao.add(testBusinessTwo);
+        Charity otherCharity = new Charity("Blind Coders");
+        charityDao.add(otherCharity);
 
-        Charity testCharity = setupCharity();
+        Business newBusiness = setupBusiness();
+        businessDao.add(newBusiness);
+        businessDao.addBusinessToCharity(newBusiness, newCharity);
+        businessDao.addBusinessToCharity(newBusiness, otherCharity);
 
-        charityDao.add(testCharity);
-
-        charityDao.addCharityToBusiness(testCharity, testBusinessOne);
-        charityDao.addCharityToBusiness(testCharity, testBusinessTwo);
-
-        assertEquals(3, charityDao.getAllBusinessesForACharity(testCharity.getId()).size());
+        Charity[] charities = {newCharity, otherCharity};
+       assertEquals(businessDao.getAllCharitiesForABusiness(newBusiness.getId()), Arrays.asList(charities));
     }
 
     @Test
@@ -99,23 +101,23 @@ public class Sql2oBusinessDaoTest {
         assertEquals(2, businessTypeDao.getAllBusinessesForBusinessType(testBusinessType.getId()).size());
     }
 
-    @Test
-    public void getAllCharitiesForABusiness() throws Exception {
-        Business testBusinessOne = setupBusiness();
-        Business testBusinessTwo = setupBusinessAlt();
-
-        businessDao.add(testBusinessOne);
-        businessDao.add(testBusinessTwo);
-
-        Charity testCharity = setupCharity();
-
-        charityDao.add(testCharity);
-
-        charityDao.addCharityToBusiness(testCharity, testBusinessOne);
-        charityDao.addCharityToBusiness(testCharity, testBusinessTwo);
-
-        assertEquals(2, charityDao.getAllBusinessesForACharity(testCharity.getId()).size());
-    }
+//    @Test
+//    public void getAllCharitiesForABusiness() throws Exception {
+//        Business testBusinessOne = setupBusiness();
+//        Business testBusinessTwo = setupBusinessAlt();
+//
+//        businessDao.add(testBusinessOne);
+//        businessDao.add(testBusinessTwo);
+//
+//        Charity testCharity = setupCharity();
+//
+//        charityDao.add(testCharity);
+//
+//        charityDao.addCharityToBusiness(testCharity, testBusinessOne);
+//        charityDao.addCharityToBusiness(testCharity, testBusinessTwo);
+//
+//        assertEquals(2, charityDao.getAllBusinessesForACharity(testCharity.getId()).size());
+//    }
 
 
     @Test
