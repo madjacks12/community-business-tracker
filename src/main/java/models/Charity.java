@@ -8,18 +8,22 @@ public class Charity {
     private int id;
 
     public Charity(String charityName) {
+
         this.charityName = charityName;
     }
 
     public String getCharityName() {
+
         return charityName;
     }
 
     public int getId() {
+
         return id;
     }
 
     public void setId(int id) {
+
         this.id = id;
     }
 

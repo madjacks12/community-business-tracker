@@ -1,6 +1,7 @@
 package dao;
 
 import models.Business;
+import models.BusinessType;
 import models.Charity;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -97,4 +98,12 @@ public class Sql2oCharityDao implements CharityDao {
 
     }
 
+    @Override
+    public Charity findById(int id) {
+        try(Connection con = sql2o.open()){
+            return con.createQuery("SELECT * FROM charities WHERE id = :id")
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(Charity.class);
+        }
+    }
 }
