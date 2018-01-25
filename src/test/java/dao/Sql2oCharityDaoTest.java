@@ -71,6 +71,16 @@ public class Sql2oCharityDaoTest {
 
     @Test
     public void getAllBusinessesForACharity() throws Exception {
+        Business testBusiness = setupBusiness();
+        Business testBusinessOther = setupBusinessAlt();
+        businessDao.add(testBusiness);
+        businessDao.add(testBusinessOther);
+        Charity testCharity = setupCharity();
+        charityDao.add(testCharity);
+        businessDao.addBusinessToCharity(testBusiness, testCharity);
+        businessDao.addBusinessToCharity(testBusinessOther, testCharity);
+
+        assertEquals(3, charityDao.getAllBusinessesForACharity(testCharity.getId()).size());
 
     }
 
