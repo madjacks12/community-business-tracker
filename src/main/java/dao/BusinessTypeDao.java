@@ -22,5 +22,5 @@ public interface BusinessTypeDao {
 
     //delete
     void deleteById(int id);
-
+    BusinessType findById(int id);
 }

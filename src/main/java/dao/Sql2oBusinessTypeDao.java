@@ -93,4 +93,13 @@ public class Sql2oBusinessTypeDao implements BusinessTypeDao {
             System.out.println(ex);
         }
     }
+    @Override
+    public BusinessType findById(int id) {
+        try(Connection con = sql2o.open()){
+            return con.createQuery("SELECT * FROM businessTypes WHERE id = :id")
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(BusinessType.class);
+        }
+    }
+
 }
