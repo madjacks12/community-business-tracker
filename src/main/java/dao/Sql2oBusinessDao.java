@@ -104,11 +104,11 @@ public class Sql2oBusinessDao implements BusinessDao {
     }
 
     @Override
-    public void update(int id, String name, String address, String email, String phone) {
-        String sql = "UPDATE businesses SET name = :name, address = :address, phone = :phone";
+    public void update(int id, String businessName, String address, String email, String phone) {
+        String sql = "UPDATE businesses SET businessName = :businessName, address = :address, phone = :phone";
         try(Connection con = sql2o.open()) {
             con.createQuery(sql)
-                .addParameter("name", name)
+                .addParameter("businessName", businessName)
                 .addParameter("address", address)
                 .addParameter("phone", phone)
                 .executeUpdate();

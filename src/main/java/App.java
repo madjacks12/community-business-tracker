@@ -31,7 +31,7 @@ public class App {
         charityDao = new Sql2oCharityDao(sql2o);
         conn = sql2o.open();
 
-        //c
+        //create a new business
         post("/businesses/new", "application/json", (request, response) ->  {
             Business business = gson.fromJson(request.body(), Business.class);
             businessDao.add(business);
@@ -39,10 +39,12 @@ public class App {
             return gson.toJson(business);
         });
 
+        //show all businesses
         get("/businesses", "application/json", (request, response) -> {
             return gson.toJson(businessDao.getAll());
         });
 
+        //create new charity
         post("/charities/new", "application/json", (request, response) ->  {
             Charity charity = gson.fromJson(request.body(), Charity.class);
             charityDao.add(charity);
@@ -50,10 +52,12 @@ public class App {
             return gson.toJson(charity);
         });
 
+        //show all charities
         get("/charities", "application/json", (request, response) -> {
             return gson.toJson(charityDao.getAll());
         });
 
+        //show specific charity
         get("/charity/:id", "application/json", (request, response) -> {
             int charityId = Integer.parseInt(request.params("id"));
 
@@ -66,6 +70,7 @@ public class App {
 
         });
 
+        //show all businesses for a charity
         get("/charities/:id/businesses", "application/json", (request, response) -> {
             int charityId = Integer.parseInt(request.params("id"));
             Charity charityToFInd = charityDao.findById(charityId);
@@ -77,6 +82,7 @@ public class App {
             }return gson.toJson(charityDao.getAllBusinessesForACharity(charityId));
         });
 
+        //associate a specific business and charity
         post("/businesses/:businessId/charities/:charityId", "application/json", (request, response) -> {
             int businessId = Integer.parseInt(request.params("businessId"));
             int charityId = Integer.parseInt(request.params("charityId"));
@@ -93,6 +99,7 @@ public class App {
             }
         });
 
+        //show specific business
         get("/businesses/:id", "application/json", (request, response) -> {
             int businessId = Integer.parseInt(request.params("id"));
 
@@ -105,7 +112,8 @@ public class App {
 
         });
 
-        get("/businesses/:id/businestypes", "application/json", (request, response) -> {
+        //show all businesses with a business type
+        get("/businessType/:id/business", "application/json", (request, response) -> {
             int businessTypeId = Integer.parseInt(request.params("id"));
             BusinessType businessTypeToFind = businessTypeDao.findById(businessTypeId);
             if (businessTypeToFind == null){
@@ -116,6 +124,7 @@ public class App {
             }return gson.toJson(businessTypeDao.getAllBusinessesForBusinessType(businessTypeId));
         });
 
+        //create a new business type
         post("/businesstypes/new", "application/json", (request, response) -> {
             BusinessType businessType = gson.fromJson(request.body(), BusinessType.class);
             businessTypeDao.add(businessType);
@@ -123,10 +132,12 @@ public class App {
             return gson.toJson(businessType);
         });
 
+        //get All business types
         get("/businesstypes", "application/json", (request, response) -> {
             return gson.toJson(businessTypeDao.getAll());
         });
 
+        //associate a specific business with a business type
         post("/businesses/:businessId/businessType/:businessTypeId", "application/json", (request, response) -> {
             int businessId = Integer.parseInt(request.params("businessId"));
             int businessTypeId = Integer.parseInt(request.params("businessTypeId"));
@@ -143,32 +154,11 @@ public class App {
             }
         });
 
-        get("/businesses/:id/businesstypes", "application/json", (request, response) -> {
-            int businessId = Integer.parseInt(request.params("id"));
+        post("/business/:businessId/update", "application/json", (request, response) -> {
+            int businessId = Integer.parseInt(request.params("businessId"));
             Business businessToFind = businessDao.findById(businessId);
-            if (businessToFind == null){
-                throw new ApiException(404, String.format("No business with that ID: \"%s\" esists", request.params("id")));
-            }
-            else if (businessTypeDao.getAllBusinessesForBusinessType(businessId).size()==0){
-                return "{\"message\":\"I'm sorry, but no businesstypes are listed for this business.\"}";
-            }
-            else {
-                    return gson.toJson(businessTypeDao.getAllBusinessesForBusinessType(businessId));
-                }
-        });
-
-        get("businessTypes/:id/businesses", "application/json" , (request, response) -> {
-            int businesstypeId = Integer.parseInt(request.params("id"));
-            BusinessType businessTypeToFind = businessTypeDao.findById(businesstypeId);
-            if (businessTypeToFind == null){
-                throw new ApiException(404, String.format("No businesstype with the id: \"%s\" exists", request.params("id")));
-            }
-            else if (businessTypeDao.getAllBusinessesForBusinessType(businesstypeId).size()==0){
-                return "{\"message\":\"I'm sorry, but no businesses are listed for this businesstype.\"}";
-            }
-            else {
-                return gson.toJson(businessTypeDao.getAllBusinessesForBusinessType(businesstypeId));
-            }
+            businessDao.update(businessId, "name", "address", "email", "phone");
+            return gson.toJson(businessToFind);
         });
 
         exception(ApiException.class, (exception, request, response) -> {

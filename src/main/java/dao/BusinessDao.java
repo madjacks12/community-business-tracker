@@ -21,6 +21,7 @@ public interface BusinessDao {
     List<Business> getAll(); //A
     List<Charity> getAllCharitiesForABusiness(int businessId); //D & E - we will implement this soon.
 
+
     Business findById(int id); //B & C
 
     //update
